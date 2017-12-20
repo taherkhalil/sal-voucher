@@ -84,7 +84,7 @@ def from_pos_call(code,total):
 	if code in vl:
 		vou= frappe.get_doc("Voucher balance table", code)
 		balance= vou.remaining_amount
-		discount_amount =0.0
+		discount_amount =0
 		if balance != 0:
 			frappe.errprint("balance there")
 			if total >= vou.remaining_amount:
@@ -95,7 +95,7 @@ def from_pos_call(code,total):
 			else:
 				frappe.errprint("voucher has more")
 				discount_amount = total
-				vou.remaining_amount = float(vou.remaining_amount) - float(total)
+				vou.remaining_amount = int(vou.remaining_amount) - int(total)
 				vou.save()
 				return discount_amount
 		else:
@@ -120,6 +120,7 @@ def from_pos_call(code,total):
 		row2.debit_in_account_currency = 0.0
 		row2.credit_in_account_currency = discount_amount
 		je.insert(ignore_permissions=True)
+		frappe.errprint("jv created")
 		je.submit()	
 
 
