@@ -87,15 +87,16 @@ def from_pos_call(code,total):
 		discount_amount =0
 		if balance != 0:
 			frappe.errprint("balance there")
-			if total >= vou.remaining_amount:
-				discount_amount =vou.remaining_amount
+			if float(total) >= float(vou.remaining_amount):
+				frappe.errprint("total greater")
+				discount_amount =float(vou.remaining_amount)
 				vou.remaining_amount = 0
 				vou.save()
 				return discount_amount
 			else:
 				frappe.errprint("voucher has more")
 				discount_amount = total
-				vou.remaining_amount = int(vou.remaining_amount) - int(total)
+				vou.remaining_amount = float(vou.remaining_amount) - float(total)
 				vou.save()
 				return discount_amount
 		else:
