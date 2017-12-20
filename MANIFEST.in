@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include voucher *.css
+recursive-include voucher *.csv
+recursive-include voucher *.html
+recursive-include voucher *.ico
+recursive-include voucher *.js
+recursive-include voucher *.json
+recursive-include voucher *.md
+recursive-include voucher *.png
+recursive-include voucher *.py
+recursive-include voucher *.svg
+recursive-include voucher *.txt
+recursive-exclude voucher *.pyc
