@@ -23,12 +23,12 @@ class Vouchers(Document):
 
 
 
-		acc = "Advances From Customer - S"
-		cash ="Cash - S"
+		acc = "Advances From Customer - DS"
+		cash ="Cash - DS"
 		je = frappe.new_doc("Journal Entry") #create jv to add advance
 		je.posting_date = getdate()
 		je.company = frappe.db.get_value("Company", frappe.db.get_value("Global Defaults", None, "default_company"), "company_name")
-		je.reference_name = self.name
+		je.bill_no = self.name
 		je.reference_date = getdate()
 		row1 = je.append("accounts", {})
 		row1.account= acc
@@ -72,7 +72,7 @@ def on_voucher_apply(doc,method):
 				frappe.msgprint("no Balance in voucher")
 		else:
 			frappe.msgprint("invalid voucher")
-
+discount_amount =0
 @frappe.whitelist()		
 def from_pos_call(code,total):
 	frappe.errprint("in voucher")
@@ -84,9 +84,13 @@ def from_pos_call(code,total):
 	if code in vl:
 		vou= frappe.get_doc("Voucher balance table", code)
 		balance= vou.remaining_amount
-		discount_amount =0
+		global discount_amount 
+		frappe.errprint(discount_amount)
 		if balance != 0:
 			frappe.errprint("balance there")
+			frappe.errprint(["flt-total",float(total),"total",total,"balance",balance,"rem",vou.remaining_amount])
+			if total > balance:
+				frappe.errprint("checking me greater")
 			if float(total) >= float(vou.remaining_amount):
 				frappe.errprint("total greater")
 				discount_amount =float(vou.remaining_amount)
@@ -102,24 +106,32 @@ def from_pos_call(code,total):
 		else:
 			frappe.msgprint("no Balance in voucher")
 
-		acc = "Advances From Customer - S"
-		sales ="Sales - S"
+
+
+def on_submit_jv(doc,method):
+	frappe.errprint("called")
+	frappe.errprint(doc.discount_amount)
+	# global discount_amount
+	frappe.errprint(discount_amount)
+
+	if doc.voucher != 0:
+		acc = "Advances From Customer - DS"
+		sales ="Sales - DS"
 		je = frappe.new_doc("Journal Entry") #create jv to add sales
 		je.posting_date = getdate()
 		je.company = frappe.db.get_value("Company", frappe.db.get_value("Global Defaults", None, "default_company"), "company_name")
-		# je.reference_name = doc.name
+		je.bill_no = doc.name
 		# je.reference_name = doc.name
 		je.reference_date = getdate()
 		row1 = je.append("accounts", {})
 		row1.account= acc
-		row1.debit_in_account_currency = discount_amount
+		row1.debit_in_account_currency = doc.discount_amount
 		row1.credit_in_account_currency = 0.0
 
 		row2 = je.append("accounts", {})
 		row2.account = sales
-	
 		row2.debit_in_account_currency = 0.0
-		row2.credit_in_account_currency = discount_amount
+		row2.credit_in_account_currency = doc.discount_amount
 		je.insert(ignore_permissions=True)
 		frappe.errprint("jv created")
 		je.submit()	
