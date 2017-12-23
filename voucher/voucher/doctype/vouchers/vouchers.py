@@ -72,8 +72,10 @@ def on_voucher_apply(doc,method):
 				frappe.msgprint("no Balance in voucher")
 		else:
 			frappe.msgprint("invalid voucher")
-discount_amount =0
-@frappe.whitelist()		
+
+
+
+@frappe.whitelist()
 def from_pos_call(code,total):
 	frappe.errprint("in voucher")
 	frappe.errprint(code)
@@ -84,7 +86,7 @@ def from_pos_call(code,total):
 	if code in vl:
 		vou= frappe.get_doc("Voucher balance table", code)
 		balance= vou.remaining_amount
-		global discount_amount 
+		discount_amount =0
 		frappe.errprint(discount_amount)
 		if balance != 0:
 			frappe.errprint("balance there")
@@ -103,6 +105,7 @@ def from_pos_call(code,total):
 				vou.remaining_amount = float(vou.remaining_amount) - float(total)
 				vou.save()
 				return discount_amount
+
 		else:
 			frappe.msgprint("no Balance in voucher")
 
