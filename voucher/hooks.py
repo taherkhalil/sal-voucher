@@ -79,17 +79,17 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-doc_events = {
-	# "*": {
-	# 	"on_update": "method",
-	# 	"on_cancel": "method",
-	# 	"on_trash": "method"
-	# }
-	"Sales Invoice" : {
-		# "validate": "package.packages.doctype.packages.packages.package_buy",
-		"on_submit": "voucher.voucher.doctype.vouchers.vouchers.on_submit_jv"
-	}
-}
+# doc_events = {
+# 	# "*": {
+# 	# 	"on_update": "method",
+# 	# 	"on_cancel": "method",
+# 	# 	"on_trash": "method"
+# 	# }
+# 	"Sales Invoice" : {
+# 		# "validate": "package.packages.doctype.packages.packages.package_buy",
+# 		"on_submit": "voucher.voucher.doctype.vouchers.vouchers.on_submit_jv"
+# 	}
+# }
 
 # Scheduled Tasks
 # ---------------
