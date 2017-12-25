@@ -112,32 +112,32 @@ def from_pos_call(code,total):
 
 
 
-# def on_submit_jv(doc,method):
-# 	frappe.errprint("called")
-# 	frappe.errprint(doc.discount_amount)
-# 	# global discount_amount
+def on_submit_jv(doc,method):
+	frappe.errprint("called")
+	frappe.errprint(doc.discount_amount)
+	# global discount_amount
 	
-# 	if doc.voucher != 0:
-# 		acc = "Advances From Customer - DS"
-# 		sales ="Sales - DS"
-# 		je = frappe.new_doc("Journal Entry") #create jv to add sales
-# 		je.posting_date = getdate()
-# 		je.company = frappe.db.get_value("Company", frappe.db.get_value("Global Defaults", None, "default_company"), "company_name")
-# 		je.bill_no = doc.name
-# 		# je.reference_name = doc.name
-# 		je.reference_date = getdate()
-# 		row1 = je.append("accounts", {})
-# 		row1.account= acc
-# 		row1.debit_in_account_currency = doc.discount_amount
-# 		row1.credit_in_account_currency = 0.0
+	if doc.voucher != 0:
+		acc = "Advances From Customer - DS"
+		sales ="Sales - DS"
+		je = frappe.new_doc("Journal Entry") #create jv to add sales
+		je.posting_date = getdate()
+		je.company = frappe.db.get_value("Company", frappe.db.get_value("Global Defaults", None, "default_company"), "company_name")
+		je.bill_no = doc.name
+		# je.reference_name = doc.name
+		je.reference_date = getdate()
+		row1 = je.append("accounts", {})
+		row1.account= acc
+		row1.debit_in_account_currency = doc.discount_amount
+		row1.credit_in_account_currency = 0.0
 
-# 		row2 = je.append("accounts", {})
-# 		row2.account = sales
-# 		row2.debit_in_account_currency = 0.0
-# 		row2.credit_in_account_currency = doc.discount_amount
-# 		je.insert(ignore_permissions=True)
-# 		frappe.errprint("jv created")
-# 		je.submit()	
+		row2 = je.append("accounts", {})
+		row2.account = sales
+		row2.debit_in_account_currency = 0.0
+		row2.credit_in_account_currency = doc.discount_amount
+		je.insert(ignore_permissions=True)
+		frappe.errprint("jv created")
+		je.submit()	
 
 
 
