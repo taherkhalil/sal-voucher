@@ -115,8 +115,7 @@ def on_submit_jv(doc,method):
 	frappe.errprint("called")
 	frappe.errprint(doc.discount_amount)
 	# global discount_amount
-	frappe.errprint(discount_amount)
-
+	
 	if doc.voucher != 0:
 		acc = "Advances From Customer - DS"
 		sales ="Sales - DS"
