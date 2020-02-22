@@ -24,8 +24,8 @@ class Vouchers(Document):
 
 
 
-		acc = "Advances From Customer - DS"
-		cash ="Cash - DS"
+		acc = "Advances From Customer - IBS"
+		cash ="Cash - IBS"
 		je = frappe.new_doc("Journal Entry") #create jv to add advance
 		je.posting_date = getdate()
 		je.company = frappe.db.get_value("Company", frappe.db.get_value("Global Defaults", None, "default_company"), "company_name")
